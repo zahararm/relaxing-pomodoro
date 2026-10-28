@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>Relaxing Pomodoro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-mode="night" data-char="awake">
+    <div id="bar">
+        <button class="mb" data-m="morning" aria-label="morning mode">
+            <svg viewBox="0 0 40 40" width="38">
+                <circle cx="20" cy="20" r="8" fill="#ffb81c" stroke="#2a1d1a" stroke-width="2.5"/>
+                <path d="M20 4v5M20 31v5M4 20h5M31 20h5M8.7 8.7l3.5 3.5M27.8 27.8l3.5 3.5M31.3 8.7l-3.5 3.5M12.2 27.8l-3.5 3.5" stroke="#2a1d1a" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+            <span class="tl">morning</span>
+        </button>
+        <button class="mb on" data-m="night" aria-label="night mode">
+            <svg viewBox="0 0 40 40" width="38">
+                <path d="M25 5a15 15 0 1 0 10 22A12 12 0 0 1 25 5z" fill="#cfd8ff" stroke="#2a1d1a" stroke-width="2.5" stroke-linejoin="round"/>
+                <path d="M30 10l1 3 3 1-3 1-1 3-1-3-3-1 3-1z" fill="#ffb81c"/>
+            </svg>
+            <span class="tl">night</span>
+        </button>
+    </div>
+
+    <div id="snd"> enjoy your study sesh! </div>
+    <div id="toast"></div>
+
+    <div id="pomoCard">
+        <div id="pomoLabel">Focus</div>
+        <div id="pomoTime">25:00</div>
+        <div class="pomoBtns">
+            <button id="pomoStart">Start</button>
+            <button id="pomoReset" aria-label="reset">↺</button>
+        </div>
+        <div id="pomoCount"></div>
+    </div>
+
+    <div id="mixer">
+        <div class="mxTitle">Ambience</div>
+        <div class="mx" data-id="rain"><button class="mxBtn" aria-label="toggle rain">🌧️<span>Rain</span></button></div>
+        <div class="mx" data-id="waves"><button class="mxBtn" aria-label="toggle beach waves">🌊<span>Waves</span></button></div>
+        <div class="mx" data-id="fire"><button class="mxBtn" aria-label="toggle fireplace">🔥<span>Fire</span></button></div>
+    </div>
+
+    <div style="display:none;">
+       <audio id="audio-rain" src="rain-ambience.mp3" loop></audio>
+        <audio id="audio-waves" src="waves-ambience.mp3" loop></audio>
+        <audio id="audio-fire" src="fire-ambience.mp3" loop></audio>
+    </div>
+
+    <div id="taskCard">
+        <div class="tcTitle" id="taskToggle">Today</div>
+        <form id="taskForm"><input id="taskInput" placeholder="add a task…" autocomplete="off"><button type="submit">+</button></form>
+        <ul id="taskList"></ul>
+    </div>
+    
+    <svg id="room" viewBox="0 0 1621 903" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Relaxing Pomodoro">
+        <defs>
+            <radialGradient id="gl">
+                <stop offset="0" stop-color="#ffc766" stop-opacity=".55"/>
+                <stop offset="1" stop-color="#ffc766" stop-opacity="0"/>
+            </radialGradient>
+            <clipPath id="win">
+                <rect x="320" y="50" width="1040" height="540"/>
+            </clipPath>
+        </defs>
+        <g id="scene">
+            <rect x="-1200" y="-800" width="4000" height="2600" fill="var(--wall)"/>
+            <rect x="-1200" y="610" width="4000" height="293" fill="#0003"/>
+            <rect x="-1200" y="903" width="4000" height="900" fill="#1a1210"/>
+            <rect x="320" y="50" width="1040" height="550" fill="url(#sky)"/>
+            <g clip-path="url(#win)">
+                <g id="stars" fill="#fff">
+                    <circle cx="400" cy="100" r="2"/>
+                    <circle cx="520" cy="180" r="2"/>
+                    <circle cx="700" cy="90" r="1.6"/>
+                    <circle cx="930" cy="130" r="2"/>
+                    <circle cx="1120" cy="100" r="2"/>
+                    <circle cx="1280" cy="190" r="1.6"/>
+                </g>
+                <circle id="sun" cx="1120" cy="250" r="48" fill="#fff4cf"/>
+                <g id="city" fill="var(--city)"></g>
+                <path fill="var(--cath)" d="M500 600V480H530V340H550V220H570V160L580 100L590 160V220H610V340H630V480H660V600Z"/>
+                <g id="lit"></g>
+                <g id="rain"></g>
+            </g>
+            <rect x="320" y="50" width="1040" height="550" rx="6" fill="none" stroke="#7a4e2d" stroke-width="22"/>
+            <rect x="833" y="50" width="14" height="550" fill="#7a4e2d"/>
+            <rect x="300" y="596" width="1080" height="22" rx="4" fill="#5e3a20"/>
+            <g id="bulbs"></g>
+            
+            <polygon points="18,22 300,76 18,130" fill="#003594" stroke="#fff" stroke-width="4" stroke-linejoin="round"/>
+            <text x="44" y="76" dominant-baseline="central" font-family="Arial Black, Arial" font-weight="900" font-size="27" fill="#ffb81c" textLength="155" lengthAdjust="spacingAndGlyphs">H2P!</text>
+            <circle cx="18" cy="22" r="4" fill="#ccc"/>
+            <circle cx="18" cy="130" r="4" fill="#ccc"/>
+            <rect x="29" y="155" width="240" height="188" rx="6" fill="#0003"/>
+            <circle cx="146" cy="148" r="4" fill="#bbb"/>
+            <g transform="translate(14 148) scale(.62)">
+                <rect x="20" y="8" width="385" height="300" rx="10" fill="#1f3a7a"/>
+                <rect x="38" y="62" width="349" height="228" fill="#fff"/>
+                <text id="calm" x="212" y="46" text-anchor="middle" fill="#fff" font-size="38" font-family="Georgia">month</text>
+                <path d="M38 108H387M38 154H387M38 200H387M38 246H387M96 62V290M154 62V290M212 62V290M270 62V290M328 62V290" stroke="#b8c0d0"/>
+                <path d="M387 290H300Q335 250 387 195Z" fill="#e6ecfb" stroke="#b8c0d0"/>
+            </g>
+
+            <g id="lshelf">
+                <rect x="20" y="460" width="230" height="12" rx="2" fill="#8a5a33"/>
+                <path d="M40 472v22l22-22M210 472v22l-22-22" fill="#6e4524"/>
+                <rect x="35" y="405" width="45" height="55" fill="#2c6fb5" rx="3"/>
+                <rect x="85" y="395" width="40" height="65" fill="#c0392b" rx="3"/>
+                <rect x="130" y="415" width="32" height="45" fill="#2e9e5b" rx="2"/>
+                <circle cx="185" cy="435" r="15" fill="#e9c46a"/>
+                
+                <rect x="20" y="565" width="230" height="12" rx="2" fill="#8a5a33"/>
+                <path d="M40 577v22l22-22M210 577v22l-22-22" fill="#6e4524"/>
+                <rect x="40" y="515" width="35" height="50" fill="#8e6bbf" rx="3"/>
+                <rect x="80" y="525" width="55" height="40" fill="#4a6fa5" rx="3"/>
+                <rect x="145" y="505" width="30" height="60" fill="#d98c5f" rx="3"/>
+            </g>
+            
+            <rect x="1432" y="64" width="176" height="252" rx="8" fill="#b98b5a" stroke="#7a5a33" stroke-width="6"/>
+            <g transform="rotate(-2 1507 147)">
+                <rect x="1452" y="86" width="112" height="112" fill="#ffe66d"/>
+                <rect x="1452" y="86" width="112" height="14" fill="#f2d24f"/>
+                <circle cx="1508" cy="94" r="6" fill="#d33"/>
+            </g>
+            <g transform="rotate(5 1568 232)">
+                <rect x="1536" y="200" width="64" height="64" fill="#ffb3c7"/>
+                <text x="1568" y="242" text-anchor="middle" font-size="26">💌</text>
+                <circle cx="1568" cy="208" r="5" fill="#2a7fd4"/>
+            </g>
+            <g transform="rotate(-4 1485 256)">
+                <rect x="1448" y="220" width="72" height="72" fill="#a9d4ff"/>
+                <text x="1484" y="268" text-anchor="middle" font-size="30">✨</text>
+                <circle cx="1484" cy="228" r="5" fill="#2e9e5b"/>
+            </g>
+            <rect x="1410" y="340" width="190" height="563" rx="6" fill="#5a3b25" stroke="#3d2716" stroke-width="6"/>
+            <g id="case"></g>
+            
+            <!-- Desk -->
+            <polygon points="300,705 1370,705 1410,815 250,815" fill="var(--desk)"/>
+            <rect x="250" y="815" width="1160" height="22" fill="var(--desk)"/>
+            <rect x="250" y="815" width="1160" height="22" fill="#0003"/>
+            <rect x="250" y="837" width="1160" height="66" fill="var(--desk)"/>
+            <rect x="250" y="837" width="1160" height="66" fill="#0005"/>
+            <rect x="310" y="850" width="480" height="42" rx="4" fill="none" stroke="#0005" stroke-width="3"/>
+            <circle cx="550" cy="871" r="6" fill="#d9b36a"/>
+            <rect x="880" y="850" width="480" height="42" rx="4" fill="none" stroke="#0005" stroke-width="3"/>
+            <circle cx="1120" cy="871" r="6" fill="#d9b36a"/>
+            
+            <!-- Backpack -->
+            <g id="Bag">
+                <ellipse cx="120" cy="902" rx="70" ry="7" fill="#0006"/>
+                <rect x="65" y="750" width="110" height="150" rx="35" fill="#2b4c8c" stroke="#16306b" stroke-width="3"/>
+                <path d="M85 750Q120 710 155 750" stroke="#16306b" stroke-width="8" fill="none" stroke-linecap="round"/>
+                <rect x="80" y="830" width="80" height="60" rx="15" fill="#1f386c" stroke="#16306b" stroke-width="3"/>
+                <circle cx="120" cy="860" r="6" fill="#ffb81c"/>
+            </g>
+          
+            <g>
+                <path d="M1240 640C1180 600 1170 520 1200 470C1240 520 1250 580 1240 640Z M1240 640C1300 600 1320 520 1290 470C1250 520 1240 580 1240 640Z M1240 640C1230 580 1235 500 1240 450C1250 500 1250 580 1240 640Z" fill="#4f8f4f"/>
+                <path d="M1240 640C1280 630 1340 590 1350 540C1310 560 1260 590 1240 640Z" fill="#6aa85d"/>
+                <path d="M1195 625H1290L1280 705H1205Z" fill="#c8693f"/>
+            </g>
+            
+            <!-- Pensss -->
+            <g class="pens" id="pens">
+                <path d="M1124 610L1116 535M1138 610L1142 528M1152 610L1166 538" stroke="#c0392b" stroke-width="7" stroke-linecap="round"/>
+                <path d="M1131 610L1128 530M1160 610L1176 548" stroke="#2c6fb5" stroke-width="7" stroke-linecap="round"/>
+            </g>
+            <rect x="1112" y="600" width="64" height="106" rx="9" fill="#e6d3a5"/>
+            <rect x="1112" y="640" width="64" height="8" fill="#c9b27c"/>
+           
+            <rect x="468" y="742" width="112" height="68" rx="2" fill="#fffdf5" stroke="#cfc8b8" stroke-width="1.5"/>
+            <path d="M478 765h92M478 777h92M478 789h92" stroke="#b8c4d4" stroke-width="2"/>
+            
+            <rect x="1160" y="690" width="132" height="38" rx="4" fill="#7a2f3a"/>
+            
+            <!-- Lamp -->
+            <g id="lampGroup">
+                <ellipse cx="350" cy="722" rx="50" ry="13" fill="#8a4a1f"/>
+                <path d="M350 722L334 592L560 426" stroke="#a65a25" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="334" cy="592" r="8" fill="#7a3f18"/>
+                <g transform="translate(535 470) rotate(30)">
+                    <path d="M-62 0Q-62-58 0-60Q62-58 62 0Z" fill="#e8892b"/>
+                    <path d="M-42-46Q-22-57 0-56" stroke="#f6b25a" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <ellipse cx="0" cy="0" rx="62" ry="11" fill="#ffe9a8" stroke="#a65a25" stroke-width="3"/>
+                </g>
+                <circle cx="561" cy="426" r="8" fill="#7a3f18"/>
+            </g>
+            
+            <!-- Mug -->
+            <rect x="436" y="692" width="48" height="40" rx="7" fill="#f4f0e6"/>
+            <path d="M484 702q18 4 0 20" stroke="#f4f0e6" stroke-width="6" fill="none"/>
+            <path class="steam" d="M452 685q-10-20 0-35q10-15 0-30" stroke="#fff" stroke-width="4" fill="none" opacity=".6"/>
+
+            <g id="computerSetup">
+                <rect x="610" y="650" width="360" height="90" rx="10" fill="#2b303c" opacity=".8"/>
+                <rect x="740" y="670" width="150" height="12" rx="4" fill="#3b4252" stroke="#1e222b" stroke-width="2"/>
+                <rect x="800" y="625" width="30" height="47" rx="3" fill="#4c566a" stroke="#1e222b" stroke-width="2"/>
+                <rect x="635" y="420" width="330" height="210" rx="10" fill="#2e3440" stroke="#1e222b" stroke-width="4"/>
+                <rect x="645" y="430" width="310" height="190" rx="4" fill="#0f141c"/>
+                <g transform="translate(655, 440)">
+                    <rect x="0" y="0" width="290" height="12" rx="3" fill="#2e3440"/>
+                    <circle cx="8" cy="6" r="3" fill="#ff5f56"/>
+                    <circle cx="18" cy="6" r="3" fill="#ffbd2e"/>
+                    <circle cx="28" cy="6" r="3" fill="#27c93f"/>
+                    <path d="M10 28h80M10 44h140M10 60h100M10 76h120" stroke="#88c0d0" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M100 28h60M158 44h80M116 60h90M134 76h70" stroke="#a3be8c" stroke-width="4" stroke-linecap="round"/>
+                </g>
+                <ellipse cx="920" cy="710" rx="12" ry="16" fill="#4c566a" stroke="#1e222b" stroke-width="2"/>
+            </g>
+            
+            <!-- Character -->
+            <g id="awake">
+                <path d="M690 772C685 680 720 585 760 575H840C880 585 915 680 910 772Z" fill="var(--shirt)"/>
+                
+                <!-- Head -->
+                <ellipse cx="800" cy="470" rx="56" ry="64" fill="#8d5b4c" stroke="#2a1d1a" stroke-width="2.5"/>
+                
+                <!-- Afro -->
+                <g fill="#231715" stroke="#2a1d1a" stroke-width="2.5">
+                    <circle cx="800" cy="440" r="95"/>
+                    <circle cx="800" cy="370" r="55"/>
+                    <circle cx="725" cy="405" r="45"/>
+                    <circle cx="875" cy="405" r="45"/>
+                    <circle cx="690" cy="460" r="42"/>
+                    <circle cx="910" cy="460" r="42"/>
+                    <circle cx="700" cy="520" r="38"/>
+                    <circle cx="900" cy="520" r="38"/>
+                    <circle cx="800" cy="510" r="42"/>
+                    <circle cx="750" cy="540" r="38"/>
+                    <circle cx="850" cy="540" r="38"/>
+                    <circle cx="790" cy="580" r="34"/>
+                    <circle cx="810" cy="580" r="34"/>
+                    <circle cx="730" cy="580" r="32"/>
+                    <circle cx="870" cy="580" r="32"/>
+                </g>
+
+                <!-- Headphones -->
+                <path d="M720 470C720 370 880 370 880 470" stroke="#ffb81c" stroke-width="12" fill="none" stroke-linecap="round"/>
+                <rect x="702" y="445" width="34" height="66" rx="14" fill="#ffb81c" stroke="#2a1d1a" stroke-width="2.5"/>
+                <rect x="864" y="445" width="34" height="66" rx="14" fill="#ffb81c" stroke="#2a1d1a" stroke-width="2.5"/>
+            </g>
+         
+            <g id="sleep">
+                <path d="M690 800C685 720 725 690 800 690C875 690 915 720 910 800Z" fill="var(--shirt)"/>
+                
+                <ellipse cx="800" cy="620" rx="56" ry="64" fill="#8d5b4c" stroke="#2a1d1a" stroke-width="2.5"/>
+                
+                <g fill="#231715" stroke="#2a1d1a" stroke-width="2.5">
+                    <circle cx="800" cy="590" r="90"/>
+                    <circle cx="800" cy="520" r="52"/>
+                    <circle cx="725" cy="555" r="42"/>
+                    <circle cx="875" cy="555" r="42"/>
+                    <circle cx="690" cy="610" r="38"/>
+                    <circle cx="910" cy="610" r="38"/>
+                    <circle cx="800" cy="640" r="40"/>
+                    <circle cx="740" cy="670" r="34"/>
+                    <circle cx="860" cy="670" r="34"/>
+                </g>
+
+                <rect x="702" y="595" width="34" height="56" rx="14" fill="#ffb81c" stroke="#2a1d1a" stroke-width="2.5"/>
+                <rect x="864" y="595" width="34" height="56" rx="14" fill="#ffb81c" stroke="#2a1d1a" stroke-width="2.5"/>
+            </g>
+            
+            <g transform="translate(680, 725)">
+                <rect x="0" y="0" width="240" height="55" rx="6" fill="#3b4252" stroke="#1e222b" stroke-width="2.5"/>
+                <rect x="12" y="9" width="216" height="8" rx="2" fill="#4c566a"/>
+                <rect x="12" y="21" width="216" height="8" rx="2" fill="#4c566a"/>
+                <rect x="12" y="33" width="216" height="8" rx="2" fill="#4c566a"/>
+                <rect x="70" y="44" width="100" height="6" rx="2" fill="#4c566a"/>
+            </g>
+           
+            <g id="chair">
+               <path d="M652 903V780Q652 740 690 740H910Q948 740 948 780V903Z" fill="#8a4a2e" stroke="#5e3220" stroke-width="4"/>
+                <rect x="652" y="740" width="22" height="163" rx="6" fill="#5e3220"/>
+                <rect x="926" y="740" width="22" height="163" rx="6" fill="#5e3220"/>
+                <rect x="682" y="760" width="236" height="143" rx="18" fill="#a05a38" stroke="#6e3a21" stroke-width="3"/>
+                <path d="M740 760V903M800 760V903M860 760V903" stroke="#5e3220" stroke-width="3" opacity=".7"/>
+                <path d="M640 790h30v40h-20a10 10 0 0 1-10-10z" fill="#7a3f18" stroke="#4a250f" stroke-width="3"/>
+                <path d="M950 790h-30v40h20a10 10 0 0 0 10-10z" fill="#7a3f18" stroke="#4a250f" stroke-width="3"/>
+            </g>
+            
+            <g id="zzz">
+                <text x="925" y="660">z</text>
+                <text x="962" y="624">z</text>
+                <text x="1000" y="588">Z</text>
+            </g>
+        </g>
+        
+        <ellipse id="glow" cx="560" cy="520" rx="330" ry="260" fill="url(#gl)"/>
+        <rect id="dark" x="-1200" y="-800" width="4000" height="2600"/>
+        <g id="hs"></g>
+    </svg>
+    
+    <script src="script.js"></script>
+</body>
+</html>
